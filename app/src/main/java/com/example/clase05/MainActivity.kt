@@ -38,10 +38,11 @@ class MainActivity : AppCompatActivity() {
         (recyclerView as RecyclerView).layoutManager = linearLayoutManager
         recyclerView!!.adapter = vacanteRecyclerAdapter
         fetchData()
-        swipe.setProgressBackgroundColorSchemeColor(Color.CYAN)
+        swipe.setProgressBackgroundColorSchemeColor(applicationContext.getColor(R.color.colorAccent))
         swipe.setColorSchemeColors(Color.WHITE)
         swipe.setOnRefreshListener {
             fetchData()
+            swipe.isRefreshing = false
         }
         fab?.setOnClickListener {
             val i = Intent(applicationContext, AddOrEditActivity::class.java)
