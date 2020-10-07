@@ -28,8 +28,8 @@ class VacanteRecyclerAdapter(private var context: Context) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: VacanteViewHolder, position: Int) {
         val vacantes = vacantes[position]
         holder.carrera.text = vacantes.carrera
-        holder.cupo.text = vacantes.cupo
-        holder.requisitos.text = vacantes.requisitos
+        holder.cupo.text = "Cupos: " + vacantes.cupo
+        holder.requisitos.text = "Requisitos: "+vacantes.requisitos
 
         holder.itemView.setOnClickListener {
             val i = Intent(context, AddOrEditActivity::class.java)

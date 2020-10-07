@@ -19,4 +19,7 @@ interface VacantesDao {
 
     @DELETE("/vacantes/{id}")
     fun deleteVacante(@Path("id") id: String): Call<ResponseBody>
+
+    @DELETE("/vacantes")
+    fun deleteAllVacantes(): Call<ResponseBody>
 }

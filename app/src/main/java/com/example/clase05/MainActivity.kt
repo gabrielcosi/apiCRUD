@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,10 +78,22 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.action_delete) {
-            val dialog = AlertDialog.Builder(this).setTitle("Info").setMessage("Click en 'SI' borrara todos los alumnos")
+            val dialog = AlertDialog.Builder(this).setTitle("Info").setMessage("Click en 'SI' borrara todas las vacantes")
                 .setPositiveButton("SI") { dialog, _ ->
-
-                    dialog.dismiss()
+                    val request = ServiceBuilder.buildService(VacantesDao::class.java)
+                    val call = request.deleteAllVacantes()
+                    call.enqueue(object : Callback<ResponseBody>{
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            if (response.isSuccessful){
+                                dialog.dismiss()
+                                fetchData()
+                            }
+                        }
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+                            Log.d("error",t.message)
+                        }
+                    })
                 }
                 .setNegativeButton("NO") { dialog, _ ->
                     dialog.dismiss()
